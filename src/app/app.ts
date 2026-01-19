@@ -1,13 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from '@shared/components/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent],
   template: `
+    <app-header></app-header>
     <main class="px-8 py-4">
-      <h1 class="text-2xl">Hello World</h1>
       <router-outlet></router-outlet>
     </main>
   `,

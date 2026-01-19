@@ -125,7 +125,7 @@ export class AuthFormComponent {
 
     if (this.isLogin()) {
       this.authService.login({ username, password }).subscribe({
-        next: () => this.handleSuccess(),
+        next: (response) => this.handleSuccess(response.access_token),
         error: (err: Error) => this.handleError(err),
       });
     } else {
@@ -162,11 +162,13 @@ export class AuthFormComponent {
     this.authForm.get('confirmPassword')?.updateValueAndValidity();
   }
 
-  private handleSuccess() {
+  private handleSuccess(token?: string) {
     this.loading.set(false);
     this.clearForm();
-    if (this.isLogin()) this.router.navigate(['']);
-    else this.swipeForm();
+    if (this.isLogin()) {
+      this.router.navigate(['']);
+      localStorage.setItem('token', token || '');
+    } else this.swipeForm();
   }
 
   private handleError(err: any) {

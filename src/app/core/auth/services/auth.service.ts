@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Credentials, LoginResponse } from '../interfaces/credentials';
 import { User } from '../interfaces/user';
 
@@ -17,13 +17,7 @@ export class AuthService {
   }
 
   login(credentials: Credentials): Observable<LoginResponse> {
-    return this.httpClient.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      tap((response) => {
-        if (response.access_token) {
-          localStorage.setItem('token', response.access_token);
-        }
-      }),
-    );
+    return this.httpClient.post<LoginResponse>(`${this.apiUrl}/login`, credentials);
   }
 
   getToken(): string | null {

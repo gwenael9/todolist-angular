@@ -3,10 +3,15 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  template: `
+    <main class="px-8 py-4">
+      <h1 class="text-2xl">Hello World</h1>
+      <router-outlet></router-outlet>
+    </main>
+  `,
 })
 export class App {
-  protected readonly title = signal('todolist-angular');
+  protected readonly title = signal('my-todo-app');
 }

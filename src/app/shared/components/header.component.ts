@@ -18,6 +18,21 @@ export class HeaderComponent {
   private router = inject(Router);
 
   currentUser = this.authService.currentUser$;
+  isDarkMode: boolean = false;
+
+  toggleDarkMode() {
+    const element = document.querySelector('html');
+    const isDark = element?.classList.toggle('my-app-dark');
+    this.isDarkMode = !!isDark;
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+  }
+
+  constructor() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      this.toggleDarkMode();
+    }
+  }
 
   logout() {
     this.authService.logout();

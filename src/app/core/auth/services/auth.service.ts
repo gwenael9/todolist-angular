@@ -52,7 +52,10 @@ export class AuthService {
     if (!token) return null;
 
     try {
-      return jwtDecode(token) as User;
+      const decoded = jwtDecode(token);
+      const isExpired = decoded.exp && decoded.exp * 1000 < Date.now();
+      if (isExpired) return null;
+      return decoded as User;
     } catch {
       return null;
     }

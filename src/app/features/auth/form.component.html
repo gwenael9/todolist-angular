@@ -1,0 +1,83 @@
+<div class="border flex flex-col p-6 rounded-md max-w-md mx-auto">
+  <div>
+    <h2 class="text-xl">{{ isLogin() ? 'Connexion' : 'Créer son compte' }}</h2>
+    <p class="text-gray-500 text-sm italic">Veuillez renseigner vos informations.</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="mt-3 mb-4">
+      <p-message size="small" severity="error">{{ errorMessage() }}</p-message>
+    </div>
+  }
+  <form [formGroup]="authForm" class="mt-4" (ngSubmit)="onSubmit()">
+    <div class="flex flex-col gap-6 mb-8">
+      <div class="flex flex-col gap-1">
+        <p-float-label variant="on">
+          <p-iconfield>
+            <p-inputicon class="pi pi-user" />
+            <input
+              pInputText
+              id="username"
+              formControlName="username"
+              autocomplete="off"
+              class="w-full"
+            />
+            <label for="username">Nom d'utilisateur</label>
+          </p-iconfield>
+        </p-float-label>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p-float-label variant="on">
+          <p-iconfield>
+            <p-inputicon class="pi pi-key" />
+            <input
+              type="password"
+              pInputText
+              id="password"
+              formControlName="password"
+              autocomplete="off"
+              class="w-full"
+            />
+            <label for="password">Mot de passe</label>
+          </p-iconfield>
+        </p-float-label>
+      </div>
+
+      @if (!isLogin()) {
+        <div class="flex flex-col gap-1">
+          <p-float-label variant="on">
+            <p-iconfield>
+              <p-inputicon class="pi pi-key" />
+              <input
+                type="password"
+                pInputText
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                autocomplete="off"
+                class="w-full"
+              />
+              <label for="confirmPassword">Confirmer le mot de passe</label>
+            </p-iconfield>
+          </p-float-label>
+        </div>
+      }
+    </div>
+
+    <div class="flex justify-between items-center gap-2">
+      <p class="text-sm italic">
+        {{ isLogin() ? 'Pas de compte ?' : 'Déjà un compte ?' }}
+        <span role="button" tabindex="0" (click)="swipeForm()" class="underline cursor-pointer">
+          {{ isLogin() ? "S'inscrire" : 'Se connecter' }}.
+        </span>
+      </p>
+      <p-button
+        type="submit"
+        severity="success"
+        label="Confirmer"
+        [loading]="loading()"
+        [disabled]="authForm.invalid"
+      ></p-button>
+    </div>
+  </form>
+</div>

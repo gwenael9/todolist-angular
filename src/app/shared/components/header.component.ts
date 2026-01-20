@@ -1,27 +1,46 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '@core/auth/services/auth.service';
+import { MenuItem, PrimeIcons } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
+import { capitalizeFirstLetter } from '../utils/capitalize';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [RouterLink, ButtonModule, MenuModule, AvatarModule],
-  template: `
-    <header class="px-8 py-4">
-      <div class="mx-auto flex justify-between items-center">
-        <p-button routerLink="/" icon="pi pi-home" rounded outlined size="large"></p-button>
-        <div class="flex gap-2">
-          <p-button
-            routerLink="/auth"
-            icon="pi pi-user"
-            styleClass="p-button-rounded p-button-outlined"
-            size="large"
-          ></p-button>
-        </div>
-      </div>
-    </header>
-  `,
+  templateUrl: './header.component.html',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  currentUser = this.authService.currentUser$;
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
+
+  items = computed<MenuItem[]>(() => {
+    return [
+      { separator: true },
+      { label: 'Mes tâches', icon: PrimeIcons.LIST_CHECK, routerLink: '/tasks' },
+      { separator: true },
+      {
+        label: 'Déconnexion',
+        icon: PrimeIcons.SIGN_OUT,
+        command: () => this.logout(),
+        iconClass: '!text-red-500',
+        labelClass: '!text-red-500',
+      },
+    ];
+  });
+
+  getCapitalizedName(): string {
+    const user = this.currentUser();
+    return user ? capitalizeFirstLetter(user.username) : '';
+  }
+}

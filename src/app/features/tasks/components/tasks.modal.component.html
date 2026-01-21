@@ -7,6 +7,7 @@
   (onHide)="close()"
 >
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 mt-2">
+    <!-- TITRE -->
     <div class="flex flex-col gap-1">
       <label for="title" class="font-semibold">Titre</label>
       <input pInputText id="title" formControlName="title" class="flex-auto" autocomplete="off" />
@@ -20,6 +21,7 @@
       }
     </div>
 
+    <!-- DESCRIPTION -->
     <div class="flex flex-col gap-1">
       <label for="description" class="font-semibold">Description</label>
       <input
@@ -31,9 +33,10 @@
       />
     </div>
 
+    <!-- ASSIGNATION (ADMIN ONLY) -->
     @if (currentUserIsAdmin) {
       <div class="flex flex-col gap-1">
-        <label for="targetUserId" class="font-semibold">Attribuer à l'utilisateur</label>
+        <label for="targetUserId" class="font-semibold"> Attribuer à l'utilisateur </label>
         <p-select
           id="targetUserId"
           formControlName="targetUserId"
@@ -51,6 +54,7 @@
       </div>
     }
 
+    <!-- ACTIONS -->
     <div class="flex justify-end gap-2 mt-4">
       <p-button label="Annuler" severity="secondary" type="button" (onClick)="close()" />
       <p-button

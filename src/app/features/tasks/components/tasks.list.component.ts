@@ -20,7 +20,9 @@ import { TaskCreateComponent } from './tasks.modal.component';
       @for (task of tasks(); track task.id) {
         <div class="border p-4 rounded-md dark:border-gray-600 dark:bg-black/20 min-w-80 shadow-sm">
           <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold">{{ task.title }}</h2>
+            <h2 class="text-xl font-semibold" [class.line-through]="task.status === 'DONE'">
+              {{ task.title }}
+            </h2>
             <p-tag
               [value]="(task.status | status).label"
               [severity]="(task.status | status).severity"

@@ -43,6 +43,7 @@ export class HeaderComponent {
     return [
       { separator: true },
       { label: 'Mes tâches', icon: PrimeIcons.LIST_CHECK, routerLink: '/tasks' },
+      { label: 'Dashboard', icon: PrimeIcons.OBJECTS_COLUMN, routerLink: '/dashboard' },
       { separator: true },
       {
         label: 'Déconnexion',

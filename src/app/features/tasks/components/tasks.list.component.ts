@@ -118,19 +118,6 @@ export class TasksListComponent {
     return tasks.filter((t) => t.status === 'DONE');
   });
 
-  // Filtres dynamiques
-
-  filter = signal<TaskFilter>('ALL');
-
-  filteredTasks = computed(() => {
-    const tasks = this.tasks();
-    const filter = this.filter();
-
-    if (filter === 'ALL') return tasks;
-    if (filter === 'TODO') return tasks.filter((t) => t.status !== 'DONE');
-    return tasks.filter((t) => t.status === 'DONE');
-  });
-
   ngOnInit() {
     this.taskService.list();
   }

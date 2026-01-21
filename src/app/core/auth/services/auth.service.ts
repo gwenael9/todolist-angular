@@ -3,8 +3,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, tap } from 'rxjs';
+import { User } from '../../users/interfaces/user';
 import { Credentials, LoginResponse } from '../interfaces/credentials';
-import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',

@@ -5,7 +5,7 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-import { capitalizeFirstLetter } from '../utils/capitalize';
+import { capitalizeFirstLetter } from '../utils';
 
 @Component({
   selector: 'app-header',

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/auth/guards/auth.guard';
 import { AuthFormComponent } from './features/auth/form.component';
 import { HomeComponent } from './features/home/home.component';
 import { TasksListComponent } from './features/tasks/tasks.list.component';
@@ -15,5 +16,6 @@ export const routes: Routes = [
   {
     path: 'tasks',
     component: TasksListComponent,
+    canActivate: [authGuard],
   },
 ];

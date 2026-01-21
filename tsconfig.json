@@ -19,7 +19,8 @@
       "@shared/*": ["src/app/shared/*"],
       "@models": ["src/app/shared/models/api.model.ts"],
       "@environments/*": ["src/environments/*"],
-      "@core/*": ["src/app/core/*"]
+      "@core/*": ["src/app/core/*"],
+      "@auth/*": ["src/app/core/auth/*"]
     }
   },
   "angularCompilerOptions": {

@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { TaskService } from '@core/tasks/services/task.service';
 import { ButtonModule } from 'primeng/button';
-import { TaskCreateComponent } from './task.modal.component';
+import { TaskCreateComponent } from './tasks.modal.component';
 
 @Component({
   selector: 'app-tasks-list',

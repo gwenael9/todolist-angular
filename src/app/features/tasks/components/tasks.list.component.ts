@@ -68,8 +68,6 @@ type TaskFilter = 'ALL' | 'TODO' | 'DONE';
                   [icon]="task.status === 'PENDING' ? 'pi pi-play-circle' : 'pi pi-check-circle'"
                 />
               }
-              <!-- <p-button (onClick)="openEdit(task.id)" text icon="pi pi-pencil" />
-              <p-button (onClick)="deleteTask(task.id)" text icon="pi pi-trash" /> -->
               <p-button
                 (onClick)="$event.stopPropagation(); openEdit(task.id)"
                 text

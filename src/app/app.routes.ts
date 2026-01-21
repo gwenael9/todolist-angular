@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/guards/auth.guard';
 import { AuthFormComponent } from './features/auth/form.component';
+import { DashboardComponent } from './features/dashboard/components/dashboard.component';
 import { HomeComponent } from './features/home/home.component';
 import { TaskDetailComponent } from './features/tasks/components/tasks.detail.component';
 import { TasksListComponent } from './features/tasks/components/tasks.list.component';
@@ -21,7 +22,12 @@ export const routes: Routes = [
   },
   {
     path: 'tasks/:id',
-    component : TaskDetailComponent,
-    canActivate: [authGuard]
-  }
+    component: TaskDetailComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard],
+  },
 ];

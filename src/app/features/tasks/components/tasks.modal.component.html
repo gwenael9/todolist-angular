@@ -1,5 +1,5 @@
 <p-dialog
-  [header]="taskId() ? 'Modifier la tâche' : 'Nouvelle Tâche'"
+  [header]="taskId() ? 'Modifier la tâche' : 'Nouvelle tâche'"
   [(visible)]="visible"
   [modal]="true"
   [style]="{ width: '25rem' }"
@@ -10,6 +10,14 @@
     <div class="flex flex-col gap-1">
       <label for="title" class="font-semibold">Titre</label>
       <input pInputText id="title" formControlName="title" class="flex-auto" autocomplete="off" />
+
+      @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('required')) {
+        <small class="text-red-500">Le titre est requis</small>
+      }
+
+      @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('minlength')) {
+        <small class="text-red-500">Minimum 3 caractères</small>
+      }
     </div>
 
     <div class="flex flex-col gap-1">
@@ -44,7 +52,7 @@
     }
 
     <div class="flex justify-end gap-2 mt-4">
-      <p-button label="Annuler" severity="secondary" (onClick)="close()" />
+      <p-button label="Annuler" severity="secondary" type="button" (onClick)="close()" />
       <p-button
         [label]="taskId() ? 'Modifier' : 'Créer'"
         type="submit"

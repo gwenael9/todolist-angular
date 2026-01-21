@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { Task } from '@core/tasks/interfaces/task';
 import { TaskService } from '@core/tasks/services/task.service';
@@ -9,7 +10,7 @@ import { TaskCreateComponent } from './tasks.modal.component';
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
-  imports: [TaskCreateComponent, ButtonModule, TagModule, TaskStatusPipe],
+  imports: [TaskCreateComponent, ButtonModule, TagModule, TaskStatusPipe, DatePipe],
   template: `
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold">Mes Tâches</h1>
@@ -20,7 +21,9 @@ import { TaskCreateComponent } from './tasks.modal.component';
       @for (task of tasks(); track task.id) {
         <div class="border p-4 rounded-md dark:border-gray-600 dark:bg-black/20 min-w-80 shadow-sm">
           <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold">{{ task.title }}</h2>
+            <h2 class="text-xl font-semibold" [class.line-through]="task.status === 'DONE'">
+              {{ task.title }}
+            </h2>
             <p-tag
               [value]="(task.status | status).label"
               [severity]="(task.status | status).severity"
@@ -43,6 +46,10 @@ import { TaskCreateComponent } from './tasks.modal.component';
               <p-button (onClick)="openEdit(task.id)" text icon="pi pi-pencil" />
               <p-button (onClick)="deleteTask(task.id)" text icon="pi pi-trash" />
             </div>
+          </div>
+          <div class="text-xs opacity-40 flex flex-col">
+            <span>Créée le : {{ task.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+            <span>Modifiée le : {{ task.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</span>
           </div>
         </div>
       } @empty {

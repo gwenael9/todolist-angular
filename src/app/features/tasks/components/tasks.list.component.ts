@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Task } from '@core/tasks/interfaces/task';
 import { TaskService } from '@core/tasks/services/task.service';
 import { ButtonModule } from 'primeng/button';
@@ -40,7 +41,10 @@ type TaskFilter = 'ALL' | 'TODO' | 'DONE';
 
     <div class="flex justify-center flex-col sm:flex-row sm:flex-wrap gap-4">
       @for (task of filteredTasks(); track task.id) {
-        <div class="border p-4 rounded-md dark:border-gray-600 dark:bg-black/20 min-w-80 shadow-sm">
+        <div
+          (click)="openDetail(task.id)"
+          class="border p-4 rounded-md dark:border-gray-600 dark:bg-black/20 min-w-80 shadow-sm"
+        >
           <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold" [class.line-through]="task.status === 'DONE'">
               {{ task.title }}
@@ -83,6 +87,11 @@ type TaskFilter = 'ALL' | 'TODO' | 'DONE';
 })
 export class TasksListComponent {
   private taskService = inject(TaskService);
+  private router = inject(Router);
+
+  openDetail(taskId: number) {
+    this.router.navigate(['/tasks', taskId]);
+  }
   tasks = this.taskService.tasks;
 
   // Modale de création / édition

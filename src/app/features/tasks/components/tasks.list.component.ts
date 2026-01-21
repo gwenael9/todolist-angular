@@ -43,7 +43,7 @@ type TaskFilter = 'ALL' | 'TODO' | 'DONE';
       @for (task of filteredTasks(); track task.id) {
         <div
           (click)="openDetail(task.id)"
-          class="border p-4 rounded-md dark:border-gray-600 dark:bg-black/20 min-w-80 shadow-sm"
+          class="border p-4 rounded-md dark:border-gray-600 dark:bg-black/20 min-w-80 shadow-sm hover:cursor-pointer"
         >
           <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold" [class.line-through]="task.status === 'DONE'">
@@ -68,8 +68,18 @@ type TaskFilter = 'ALL' | 'TODO' | 'DONE';
                   [icon]="task.status === 'PENDING' ? 'pi pi-play-circle' : 'pi pi-check-circle'"
                 />
               }
-              <p-button (onClick)="openEdit(task.id)" text icon="pi pi-pencil" />
-              <p-button (onClick)="deleteTask(task.id)" text icon="pi pi-trash" />
+              <!-- <p-button (onClick)="openEdit(task.id)" text icon="pi pi-pencil" />
+              <p-button (onClick)="deleteTask(task.id)" text icon="pi pi-trash" /> -->
+              <p-button
+                (onClick)="$event.stopPropagation(); openEdit(task.id)"
+                text
+                icon="pi pi-pencil"
+              />
+              <p-button
+                (onClick)="$event.stopPropagation(); deleteTask(task.id)"
+                text
+                icon="pi pi-trash"
+              />
             </div>
           </div>
           <div class="text-xs opacity-40 flex flex-col">

@@ -6,11 +6,12 @@ import { TaskService } from '@core/tasks/services/task.service';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { TaskStatusPipe } from '../pipes/task.pipe';
+import { CommentsListComponent } from "./comments.list.component";
 
 @Component({
   selector: 'app-task-detail',
   standalone: true,
-  imports: [ButtonModule, TagModule, TaskStatusPipe, DatePipe],
+  imports: [ButtonModule, TagModule, TaskStatusPipe, DatePipe, CommentsListComponent],
   template: `
     <div class="mb-6">
       <p-button
@@ -50,6 +51,9 @@ import { TaskStatusPipe } from '../pipes/task.pipe';
           <span>Modifiée le : {{ task()?.updatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
         </div>
       </div>
+
+      <app-comments-list />
+
     } @else {
       <p class="text-center py-10">Chargement de la tâche...</p>
     }

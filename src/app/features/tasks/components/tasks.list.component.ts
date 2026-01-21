@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Task } from '@core/tasks/interfaces/task';
 import { TaskService } from '@core/tasks/services/task.service';
 import { ButtonModule } from 'primeng/button';
@@ -6,18 +7,39 @@ import { TagModule } from 'primeng/tag';
 import { TaskStatusPipe } from '../pipes/task.pipe';
 import { TaskCreateComponent } from './tasks.modal.component';
 
+type TaskFilter = 'ALL' | 'TODO' | 'DONE';
+
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
-  imports: [TaskCreateComponent, ButtonModule, TagModule, TaskStatusPipe],
+  imports: [TaskCreateComponent, ButtonModule, TagModule, TaskStatusPipe, DatePipe],
   template: `
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold">Mes Tâches</h1>
       <p-button label="Nouvelle tâche" icon="pi pi-plus" (onClick)="openCreate()" />
     </div>
 
+    <!-- Barre de filtres -->
+    <div class="flex gap-2 mb-4">
+      <p-button
+        label="Toutes"
+        [severity]="filter() === 'ALL' ? 'success' : 'secondary'"
+        (onClick)="filter.set('ALL')"
+      ></p-button>
+      <p-button
+        label="À faire"
+        [severity]="filter() === 'TODO' ? 'success' : 'secondary'"
+        (onClick)="filter.set('TODO')"
+      ></p-button>
+      <p-button
+        label="Terminées"
+        [severity]="filter() === 'DONE' ? 'success' : 'secondary'"
+        (onClick)="filter.set('DONE')"
+      ></p-button>
+    </div>
+
     <div class="flex justify-center flex-col sm:flex-row sm:flex-wrap gap-4">
-      @for (task of tasks(); track task.id) {
+      @for (task of filteredTasks(); track task.id) {
         <div class="border p-4 rounded-md dark:border-gray-600 dark:bg-black/20 min-w-80 shadow-sm">
           <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold" [class.line-through]="task.status === 'DONE'">
@@ -46,6 +68,10 @@ import { TaskCreateComponent } from './tasks.modal.component';
               <p-button (onClick)="deleteTask(task.id)" text icon="pi pi-trash" />
             </div>
           </div>
+          <div class="text-xs opacity-40 flex flex-col">
+            <span>Créée le : {{ task.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+            <span>Modifiée le : {{ task.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
         </div>
       } @empty {
         <p class="text-center w-full py-10">Aucune tâche disponible.</p>
@@ -59,8 +85,22 @@ export class TasksListComponent {
   private taskService = inject(TaskService);
   tasks = this.taskService.tasks;
 
+  // Modale de création / édition
   showModal = signal(false);
   selectedTaskId = signal<number | null>(null);
+
+  // Filtres dynamiques
+
+  filter = signal<TaskFilter>('ALL');
+
+  filteredTasks = computed(() => {
+    const tasks = this.tasks();
+    const filter = this.filter();
+
+    if (filter === 'ALL') return tasks;
+    if (filter === 'TODO') return tasks.filter((t) => t.status !== 'DONE');
+    return tasks.filter((t) => t.status === 'DONE');
+  });
 
   ngOnInit() {
     this.taskService.list();
@@ -78,11 +118,8 @@ export class TasksListComponent {
 
   modifyStatus(task: Task) {
     let newStatus: 'IN_PROGRESS' | 'DONE' | undefined;
-    if (task.status === 'PENDING') {
-      newStatus = 'IN_PROGRESS';
-    } else if (task.status === 'IN_PROGRESS') {
-      newStatus = 'DONE';
-    }
+    if (task.status === 'PENDING') newStatus = 'IN_PROGRESS';
+    else if (task.status === 'IN_PROGRESS') newStatus = 'DONE';
 
     if (newStatus) {
       this.taskService.updateTask(task.id, { status: newStatus }).subscribe();

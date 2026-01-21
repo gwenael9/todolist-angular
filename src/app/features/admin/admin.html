@@ -13,32 +13,29 @@
       </thead>
 
       <tbody>
-        @for (user of users(); track user.id) {
-          <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
+        @for (user of displayedUsers(); track user.id) {
+  <tr>
+    <td>{{ user.id }}</td>
+    <td>{{ user.username }}</td>
+    <td>
+      <span
+        class="badge"
+        [class.admin]="user.role === 'ADMIN'"
+        [class.user]="user.role === 'USER'"
+      >
+        {{ user.role }}
+      </span>
+    </td>
+    <td>
+      @if (user.role !== 'ADMIN') {
+        <button class="ban-btn" (click)="ban(user)">Bannir</button>
+      } @else {
+        <span class="disabled">Protégé</span>
+      }
+    </td>
+  </tr>
+}
 
-            <td>
-              <span
-                class="badge"
-                [class.admin]="user.role === 'ADMIN'"
-                [class.user]="user.role === 'USER'"
-              >
-                {{ user.role }}
-              </span>
-            </td>
-
-            <td>
-              @if (user.role !== 'ADMIN') {
-                <button class="ban-btn" (click)="ban(user)">
-                  Bannir
-                </button>
-              } @else {
-                <span class="disabled">Protégé</span>
-              }
-            </td>
-          </tr>
-        }
       </tbody>
     </table>
   </div>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable, tap } from 'rxjs';
-import { CreateTaskDto, Task } from '../interfaces/task';
+import { CreateTaskDto, Task, UpdateTaskDto } from '../interfaces/task';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +22,19 @@ export class TaskService {
 
   create(task: CreateTaskDto): Observable<Task> {
     return this.httpClient.post<Task>(this.apiUrl, task).pipe(tap(() => this.list()));
+  }
+
+  updateTask(taskId: number, task: UpdateTaskDto): Observable<Task> {
+    return this.httpClient
+      .patch<Task>(`${this.apiUrl}/${taskId}`, task)
+      .pipe(tap(() => this.list()));
+  }
+
+  getTaskById(taskId: number): Observable<Task> {
+    return this.httpClient.get<Task>(`${this.apiUrl}/${taskId}`);
+  }
+
+  deleteTask(taskId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}/${taskId}`).pipe(tap(() => this.list()));
   }
 }

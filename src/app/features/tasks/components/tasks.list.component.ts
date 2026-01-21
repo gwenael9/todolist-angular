@@ -63,7 +63,7 @@ type TaskFilter = 'ALL' | 'TODO' | 'DONE';
             <div>
               @if (task.status !== 'DONE') {
                 <p-button
-                  (onClick)="modifyStatus(task)"
+                  (onClick)="$event.stopPropagation(); modifyStatus(task)"
                   text
                   [icon]="task.status === 'PENDING' ? 'pi pi-play-circle' : 'pi pi-check-circle'"
                 />

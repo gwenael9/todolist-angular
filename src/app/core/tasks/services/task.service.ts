@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable, tap } from 'rxjs';
 import { CreateTaskDto, Task, UpdateTaskDto } from '../interfaces/task';
@@ -13,6 +13,10 @@ export class TaskService {
 
   #tasks = signal<Task[]>([]);
   tasks = this.#tasks.asReadonly();
+
+  tasksDone = computed(() => {
+    return this.tasks().filter((task) => task.status === 'DONE');
+  });
 
   list() {
     this.httpClient.get<Task[]>(this.apiUrl).subscribe((data) => {
@@ -37,4 +41,6 @@ export class TaskService {
   deleteTask(taskId: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.apiUrl}/${taskId}`).pipe(tap(() => this.list()));
   }
+
+
 }

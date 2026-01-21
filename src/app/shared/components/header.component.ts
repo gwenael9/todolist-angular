@@ -42,7 +42,9 @@ export class HeaderComponent {
   items = computed<MenuItem[]>(() => {
     return [
       { separator: true },
+      { label: 'Accueil', icon: PrimeIcons.HOME, routerLink: '/' },
       { label: 'Mes tâches', icon: PrimeIcons.LIST_CHECK, routerLink: '/tasks' },
+      { label: 'Dashboard', icon: PrimeIcons.OBJECTS_COLUMN, routerLink: '/dashboard' },
       { separator: true },
       {
         label: 'Déconnexion',

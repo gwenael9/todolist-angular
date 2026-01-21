@@ -41,7 +41,7 @@ export class AuthService {
   private setUserFromToken(token: string): void {
     try {
       const decoded = jwtDecode(token);
-      this.currentUser.set(decoded as User);
+      this.currentUser.set({ ...decoded, id: decoded.sub } as unknown as User);
     } catch (error) {
       this.logout();
     }
@@ -55,7 +55,7 @@ export class AuthService {
       const decoded = jwtDecode(token);
       const isExpired = decoded.exp && decoded.exp * 1000 < Date.now();
       if (isExpired) return null;
-      return decoded as User;
+      return { ...decoded, id: decoded.sub } as unknown as User;
     } catch {
       return null;
     }

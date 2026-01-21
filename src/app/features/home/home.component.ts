@@ -9,9 +9,7 @@ import { ButtonModule } from 'primeng/button';
   imports: [RouterModule, ButtonModule],
   template: `
     <div class="flex flex-col items-center">
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-        Bienvenue sur TaskManager
-      </h1>
+      <h1 class="text-4xl font-bold  mb-4 text-center">Bienvenue sur TaskManager</h1>
 
       <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 text-center max-w-md">
         Gérez vos projets, suivez vos progrès et collaborez avec votre équipe en toute simplicité.

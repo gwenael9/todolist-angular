@@ -1,0 +1,45 @@
+<div class="admin-container">
+  <h2>Gestion des utilisateurs</h2>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Rôle</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (user of users(); track user.id) {
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+
+            <td>
+              <span
+                class="badge"
+                [class.admin]="user.role === 'ADMIN'"
+                [class.user]="user.role === 'USER'"
+              >
+                {{ user.role }}
+              </span>
+            </td>
+
+            <td>
+              @if (user.role !== 'ADMIN') {
+                <button class="ban-btn" (click)="ban(user)">
+                  Bannir
+                </button>
+              } @else {
+                <span class="disabled">Protégé</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

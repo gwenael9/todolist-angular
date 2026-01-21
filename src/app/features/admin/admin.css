@@ -1,0 +1,80 @@
+.admin-container {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f5f5f5;
+}
+
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+}
+
+tr {
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background-color: #fafafa;
+}
+
+/* Badge rôles */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.badge.admin {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.badge.user {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Bouton bannir */
+.ban-btn {
+  background: #ef4444;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.2s;
+}
+
+.ban-btn:hover {
+  background: #dc2626;
+}
+
+/* Texte protégé */
+.disabled {
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+}

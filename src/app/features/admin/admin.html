@@ -1,10 +1,10 @@
-<div class="admin-container">
-  <h2>Gestion des utilisateurs</h2>
+<div>
+  <h2 class="text-3xl font-bold mb-6 text-primary">Gestion des utilisateurs</h2>
 
-  <div class="card">
-    <table>
+  <div class="rounded-xl overflow-x-auto shadow-2xl p-4 border dark:border-gray-400 dark:">
+    <table class="w-full border-collapse">
       <thead>
-        <tr>
+        <tr class="border-b">
           <th>ID</th>
           <th>Nom</th>
           <th>Rôle</th>
@@ -14,28 +14,27 @@
 
       <tbody>
         @for (user of displayedUsers(); track user.id) {
-  <tr>
-    <td>{{ user.id }}</td>
-    <td>{{ user.username }}</td>
-    <td>
-      <span
-        class="badge"
-        [class.admin]="user.role === 'ADMIN'"
-        [class.user]="user.role === 'USER'"
-      >
-        {{ user.role }}
-      </span>
-    </td>
-    <td>
-      @if (user.role !== 'ADMIN') {
-        <button class="ban-btn" (click)="ban(user)">Bannir</button>
-      } @else {
-        <span class="disabled">Protégé</span>
-      }
-    </td>
-  </tr>
-}
-
+          <tr class="border-b">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>
+              <span
+                class="badge"
+                [class.admin]="user.role === 'ADMIN'"
+                [class.user]="user.role === 'USER'"
+              >
+                {{ user.role }}
+              </span>
+            </td>
+            <td>
+              @if (user.role !== 'ADMIN') {
+                <p-button severity="danger" (click)="ban(user)">Bannir</p-button>
+              } @else {
+                <span class="text-[#999] italic text-sm">Protégé</span>
+              }
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>

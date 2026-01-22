@@ -40,11 +40,15 @@ export class HeaderComponent {
   }
 
   items = computed<MenuItem[]>(() => {
+    const isAdmin = this.currentUser()?.role === 'ADMIN';
     return [
       { separator: true },
       { label: 'Accueil', icon: PrimeIcons.HOME, routerLink: '/' },
-      { label: 'Mes tâches', icon: PrimeIcons.LIST_CHECK, routerLink: '/tasks' },
+      ...(isAdmin
+        ? [{ label: 'Administration', icon: PrimeIcons.SHIELD, routerLink: '/users' }]
+        : []),
       { label: 'Dashboard', icon: PrimeIcons.OBJECTS_COLUMN, routerLink: '/dashboard' },
+      { label: 'Mes tâches', icon: PrimeIcons.LIST_CHECK, routerLink: '/tasks' },
       { separator: true },
       {
         label: 'Déconnexion',

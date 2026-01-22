@@ -17,7 +17,9 @@ import { CardDashboardPipe } from '../pipe/card.pipe';
         </div>
         <div
           class="flex items-center justify-center rounded-md w-12 h-12"
-          [class]="'bg-' + config.color + '-100'"
+          [class.bg-blue-200]="config.color === 'blue'"
+          [class.bg-green-200]="config.color === 'green'"
+          [class.bg-purple-200]="config.color === 'purple'"
         >
           <i
             class="pi text-xl"

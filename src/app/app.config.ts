@@ -5,20 +5,22 @@ import { providePrimeNG } from 'primeng/config';
 
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from '@auth/interceptors/auth.interceptor';
+import { ConfirmationService } from 'primeng/api';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes,withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     providePrimeNG({
       theme: {
         preset: Aura,
         options: {
-          darkModeSelector: '.my-app-dark',
+          darkModeSelector: '.dark',
         },
       },
     }),
+    ConfirmationService,
   ],
 };

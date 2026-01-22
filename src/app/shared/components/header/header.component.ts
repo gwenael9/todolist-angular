@@ -5,7 +5,7 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-import { capitalizeFirstLetter } from '../utils';
+import { capitalizeFirstLetter } from '../../utils';
 
 @Component({
   selector: 'app-header',
@@ -22,15 +22,21 @@ export class HeaderComponent {
 
   toggleDarkMode() {
     const element = document.querySelector('html');
-    const isDark = element?.classList.toggle('my-app-dark');
+    const isDark = element?.classList.toggle('dark');
     this.isDarkMode = !!isDark;
     localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
   }
 
   ngOnInit() {
     const savedTheme = localStorage.getItem('theme');
+    const element = document.querySelector('html');
+
     if (savedTheme === 'dark') {
-      this.toggleDarkMode();
+      element?.classList.add('dark');
+      this.isDarkMode = true;
+    } else {
+      element?.classList.remove('dark');
+      this.isDarkMode = false;
     }
   }
 
